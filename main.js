@@ -76,7 +76,7 @@ async function handleClick(event) {
 	
 	await new Promise(resolve => {
 		setTimeout(() => {
-			resolve(computerMove(true));
+			resolve(computerMove());
 		}, computerDelay);
 	});
 	
@@ -97,27 +97,23 @@ async function handleClick(event) {
 ;(async () => {
 	await new Promise(resolve => {
 		setTimeout(() => {
-			resolve(computerMove(true));
+			resolve(computerMove());
 		}, computerDelay * 1.5);
 	});
 	
 	playerTurn = true;
 })();
 
-function computerMove(fastLearning = false) {
+function computerMove() {
 	turn++;
 	
 	if (!stateInMatchbox(getBoardState())) {
-		if (fastLearning) {
-			matchbox[getBoardState()] = getMoves();
-		} else {
-			matchbox[getBoardState()] = (
-				(turn == 1) ? getMoves(8) :
-				(turn == 2) ? getMoves(4) :
-				(turn == 3) ? getMoves(2) :
-				getMoves()
-			);
-		}
+		matchbox[getBoardState()] = (
+			(turn == 1) ? getMoves(8) :
+			(turn == 2) ? getMoves(4) :
+			(turn == 3) ? getMoves(2) :
+			getMoves()
+		);
 	}
 	
 	const boardState = getBoardState();
